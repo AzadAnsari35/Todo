@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import AddIcon from "@material-ui/icons/Add";
 import Divider from "@material-ui/core/Divider";
 import TodoContent from "./TodoContent";
+import Fab from "@material-ui/core/Fab";
 
 const Todo = () => {
   const classes = useStyles();
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(["", ""]);
+
+  const handleAdd = () => {
+    setList([...list, ""]);
+  };
+
+  const updateList = (e, i) => {
+    let newArr = [...list];
+    newArr[i] = e.target.value;
+    console.log(newArr);
+    setList(newArr);
+  };
 
   return (
     <div className={classes.root}>
@@ -15,10 +27,12 @@ const Todo = () => {
         <Typography variant="h2" style={{ color: "#FDD40A" }}>
           Todo
         </Typography>
-        <AddCircleIcon className={classes.addIcon} />
+        <Fab onClick={handleAdd}>
+          <AddIcon className={classes.addIcon} />
+        </Fab>
       </div>
       <Divider classname={classes.dividerLine} variant="middle" />
-      <TodoContent list={list} />
+      <TodoContent list={list} updateList={updateList} />
     </div>
   );
 };
@@ -36,7 +50,8 @@ const useStyles = makeStyles(theme => ({
   header: {
     display: "flex",
     justifyContent: "space-around",
-    paddingTop: 50
+    paddingTop: 50,
+    paddingBottom: 50
   },
   dividerLine: {
     height: 2,
