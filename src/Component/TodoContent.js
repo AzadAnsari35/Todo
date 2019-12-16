@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
 
 const TodoContent = ({ list, addList, handleAdd }) => {
   const classes = useStyles();
@@ -14,8 +15,6 @@ const TodoContent = ({ list, addList, handleAdd }) => {
   const handleKeyPress = async (event, index, cur) => {
     if (event.key === "Enter") {
       localStorage.setItem(index, cur);
-      console.log("list", list);
-      console.log("index", index);
 
       if (list.length - 1 === index) {
         await handleAdd();
@@ -28,20 +27,26 @@ const TodoContent = ({ list, addList, handleAdd }) => {
   };
 
   useEffect(() => {
-    let references = [...Array(15)].map(r => React.createRef());
+    let references = [...Array(50)].map(r => React.createRef());
     setRefs(references);
-  }, [list]);
+  }, []);
 
   return (
     <div>
       {list.map((cur, index) => (
         <div className={classes.oneRow} key={index}>
+          <Radio />
           <TextField
             fullWidth
             value={cur}
             onChange={event => changeText(event, index)}
             onKeyPress={event => handleKeyPress(event, index, cur)}
             inputRef={refs[index]}
+            InputProps={{
+              classes: {
+                underline: classes.underline
+              }
+            }}
           />
         </div>
       ))}
@@ -52,8 +57,20 @@ const TodoContent = ({ list, addList, handleAdd }) => {
 const useStyles = makeStyles(theme => ({
   oneRow: {
     display: "flex",
-    backgroundColor: "#bbbbbb",
-    height: 60
+    height: 60,
+    color: "#ffffff"
+  },
+  underline: {
+    color: "#E0E0E0",
+    "&:before": {
+      borderBottom: "1px solid #46484A"
+    },
+    "&:after": {
+      borderBottom: "1px solid #FDD40A"
+    },
+    "&:hover": {
+      borderBottom: "1px solid #FDD40A"
+    }
   }
 }));
 

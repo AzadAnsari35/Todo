@@ -64,11 +64,12 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "space-around",
     paddingTop: 50,
-    paddingBottom: 50
+    paddingBottom: 15
   },
   dividerLine: {
     height: 2,
-    backgroundColor: "#C1C1C1"
+    backgroundColor: "#46484A",
+    marginBottom: 50
   }
 }));
 
