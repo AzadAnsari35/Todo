@@ -8,7 +8,7 @@ import Fab from "@material-ui/core/Fab";
 
 const Todo = () => {
   const classes = useStyles();
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([""]);
 
   const handleAdd = () => {
     setList([...list, ""]);
@@ -45,7 +45,7 @@ const Todo = () => {
         </Fab>
       </div>
       <Divider className={classes.dividerLine} variant="middle" />
-      <TodoContent list={list} addList={addList} />
+      <TodoContent list={list} addList={addList} handleAdd={handleAdd} />
     </div>
   );
 };

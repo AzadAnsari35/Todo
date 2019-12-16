@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 
-const TodoContent = ({ list, addList }) => {
+const TodoContent = ({ list, addList, handleAdd }) => {
   const classes = useStyles();
 
   const [refs, setRefs] = React.useState([]);
@@ -11,9 +11,16 @@ const TodoContent = ({ list, addList }) => {
     addList(e, i);
   };
 
-  const handleKeyPress = (event, index, cur) => {
+  const handleKeyPress = async (event, index, cur) => {
     if (event.key === "Enter") {
       localStorage.setItem(index, cur);
+      console.log("list", list);
+      console.log("index", index);
+
+      if (list.length - 1 === index) {
+        await handleAdd();
+        refs[index + 1].current.focus();
+      }
       if (index < list.length - 1) {
         refs[index + 1].current.focus();
       }
@@ -23,7 +30,7 @@ const TodoContent = ({ list, addList }) => {
   useEffect(() => {
     let references = [...Array(15)].map(r => React.createRef());
     setRefs(references);
-  }, []);
+  }, [list]);
 
   return (
     <div>
