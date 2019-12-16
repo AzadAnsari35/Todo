@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -8,16 +8,29 @@ import Fab from "@material-ui/core/Fab";
 
 const Todo = () => {
   const classes = useStyles();
-  const [list, setList] = useState(["", ""]);
+  const [list, setList] = useState([]);
 
   const handleAdd = () => {
     setList([...list, ""]);
   };
 
-  const updateList = (e, i) => {
+  useEffect(() => {
+    function allStorage() {
+      let value = [];
+      let keys = Object.keys(localStorage);
+      let i = keys.length;
+
+      while (i--) {
+        value.unshift(localStorage.getItem(keys[i]));
+      }
+      setList(value);
+    }
+    allStorage();
+  }, []);
+
+  const addList = (e, i) => {
     let newArr = [...list];
     newArr[i] = e.target.value;
-    console.log(newArr);
     setList(newArr);
   };
 
@@ -31,8 +44,8 @@ const Todo = () => {
           <AddIcon className={classes.addIcon} />
         </Fab>
       </div>
-      <Divider classname={classes.dividerLine} variant="middle" />
-      <TodoContent list={list} updateList={updateList} />
+      <Divider className={classes.dividerLine} variant="middle" />
+      <TodoContent list={list} addList={addList} />
     </div>
   );
 };

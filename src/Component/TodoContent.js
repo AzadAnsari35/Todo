@@ -1,30 +1,40 @@
-import React from "react";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 
-const TodoContent = ({ list, updateList }) => {
+const TodoContent = ({ list, addList }) => {
   const classes = useStyles();
 
-  const [check, setCheck] = React.useState(false);
-
-  const toggleCheck = () => {
-    setCheck(!check);
-  };
+  const [refs, setRefs] = React.useState([]);
 
   const changeText = (e, i) => {
-    updateList(e, i);
+    addList(e, i);
   };
+
+  const handleKeyPress = (event, index, cur) => {
+    if (event.key === "Enter") {
+      localStorage.setItem(index, cur);
+      if (index < list.length - 1) {
+        refs[index + 1].current.focus();
+      }
+    }
+  };
+
+  useEffect(() => {
+    let references = [...Array(15)].map(r => React.createRef());
+    setRefs(references);
+  }, []);
 
   return (
     <div>
       {list.map((cur, index) => (
         <div className={classes.oneRow} key={index}>
-          <Checkbox checked={check} onChange={toggleCheck} />
           <TextField
             fullWidth
             value={cur}
             onChange={event => changeText(event, index)}
+            onKeyPress={event => handleKeyPress(event, index, cur)}
+            inputRef={refs[index]}
           />
         </div>
       ))}
