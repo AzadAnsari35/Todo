@@ -11,7 +11,9 @@ const Todo = () => {
   const [list, setList] = useState([""]);
 
   const handleAdd = () => {
-    setList([...list, ""]);
+    if (list[list.length - 1] !== "") {
+      setList([...list, ""]);
+    }
   };
 
   useEffect(() => {
