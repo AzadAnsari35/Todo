@@ -62,9 +62,10 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     paddingTop: 50,
-    paddingBottom: 15
+    paddingBottom: 15,
+    margin: "0px 100px"
   },
   dividerLine: {
     height: 2,
