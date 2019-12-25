@@ -41,11 +41,7 @@ const TodoContent = ({ list, addList, handleAdd }) => {
     <div>
       {list.map((cur, index) => (
         <div className={classes.oneRow} key={index}>
-          <Radio
-            classes={{
-              root: classes.RadioButtonIcon
-            }}
-          />
+          <Radio style={{ color: "#FDD40A" }} />
           <TextField
             fullWidth
             value={cur}
@@ -82,9 +78,6 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       borderBottom: "1px solid #FDD40A"
     }
-  },
-  RadioButtonIcon: {
-    color: "#46484A"
   }
 }));
 
